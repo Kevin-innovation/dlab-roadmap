@@ -404,7 +404,7 @@
             background: var(--card-gradient);
             border-radius: 24px 24px 0 0;
         }
-
+        
         .track-card[data-level*="elementary"] {
             --card-gradient: var(--success-gradient);
             --card-glow: rgba(74, 222, 128, 0.3);
@@ -699,6 +699,279 @@
                 margin-right: 0;
             }
         }
+
+        /* 트랙 상세 모달 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-container {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.9) translateY(30px);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-icon {
+            font-size: 2rem;
+            margin-right: 20px;
+            width: 70px;
+            height: 70px;
+            border-radius: var(--border-radius);
+            display: grid;
+            place-items: center;
+            color: white;
+            flex-shrink: 0;
+            background: var(--card-gradient);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .modal-icon::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            background: var(--card-gradient);
+            z-index: -1;
+            animation: icon-pulse 3s ease-in-out infinite;
+        }
+
+        .modal-title-section {
+            flex: 1;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            line-height: 1.3;
+            color: var(--text-light);
+            margin-bottom: 4px;
+        }
+
+        .modal-age {
+            font-size: 1.1rem;
+            color: var(--text-accent);
+            font-weight: 500;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            font-size: 1.2rem;
+            color: var(--text-accent);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            transform: rotate(90deg);
+        }
+
+        .modal-content {
+            margin-bottom: 32px;
+        }
+
+        .modal-section {
+            margin-bottom: 28px;
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .modal-section h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .modal-section h3 i {
+            color: #667eea;
+            font-size: 1.1em;
+        }
+
+        .modal-section p {
+            font-size: 1.05rem;
+            color: var(--text-accent);
+            line-height: 1.7;
+        }
+
+        .modal-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .modal-section li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 1.05rem;
+            color: var(--text-accent);
+            position: relative;
+            padding-left: 24px;
+        }
+
+        .modal-section li:last-child {
+            border-bottom: none;
+        }
+
+        .modal-section li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .growth-path {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            padding: 20px;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .recommended-for {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .recommend-tag {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .modal-btn {
+            padding: 16px 32px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 150px;
+            justify-content: center;
+        }
+
+        .modal-btn.secondary {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-accent);
+        }
+
+        .modal-btn.primary {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .modal-btn.secondary:hover {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: rgba(102, 126, 234, 0.5);
+            color: var(--text-light);
+        }
+
+        .modal-btn.primary:hover {
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        /* 모달 반응형 */
+        @media (max-width: 768px) {
+            .modal-container {
+                padding: 24px;
+                width: 95%;
+                max-height: 95vh;
+            }
+            
+            .modal-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .modal-icon {
+                margin-right: 0;
+            }
+            
+            .modal-footer {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .modal-btn {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -712,17 +985,72 @@
         <!-- JavaScript로 동적 생성 -->
     </div>
 
+    <!-- 트랙 상세 모달 -->
+    <div class="modal-overlay" id="trackModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <div class="modal-icon">
+                    <i id="modalIcon" class="fas fa-cubes"></i>
+                </div>
+                <div class="modal-title-section">
+                    <h2 id="modalTitle">트랙 제목</h2>
+                    <p id="modalAge">대상 연령</p>
+                </div>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-content">
+                <div class="modal-section">
+                    <h3><i class="fas fa-info-circle"></i> 클래스 소개</h3>
+                    <p id="modalDescription">클래스 설명이 여기에 표시됩니다.</p>
+                </div>
+                
+                <div class="modal-section">
+                    <h3><i class="fas fa-list-check"></i> 학습 내용</h3>
+                    <ul id="modalCurriculum">
+                        <!-- JavaScript로 동적 생성 -->
+                    </ul>
+                </div>
+                
+                <div class="modal-section">
+                    <h3><i class="fas fa-rocket"></i> 학습 완료 후 성장 방향</h3>
+                    <div class="growth-path">
+                        <div id="modalGrowth">성장 경로가 여기에 표시됩니다.</div>
+                    </div>
+                </div>
+                
+                <div class="modal-section">
+                    <h3><i class="fas fa-target"></i> 추천 대상</h3>
+                    <div class="recommended-for" id="modalRecommended">
+                        <!-- JavaScript로 동적 생성 -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="modal-btn secondary" onclick="closeModal()">
+                    <i class="fas fa-arrow-left"></i> 돌아가기
+                </button>
+                <button class="modal-btn primary">
+                    <i class="fas fa-comments"></i> 상담 신청하기
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <header class="header">
             <h1>D.LAB 수성캠퍼스<br>코딩 로드맵</h1>
             <p>개인의 목표와 수준에 맞춰 설계된 최적의 학습 경로.<br>초등부터 성인까지, 당신의 잠재력을 코드로 실현하세요.</p>
             <div class="cta-container">
-                <a href="#" class="cta-btn"><i class="fas fa-comments"></i> 1:1 맞춤 상담 신청</a>
+            <a href="#" class="cta-btn"><i class="fas fa-comments"></i> 1:1 맞춤 상담 신청</a>
                 <a href="roadmap.html" class="cta-btn secondary"><i class="fas fa-route"></i> 성장 로드맵 보기</a>
             </div>
         </header>
 
-                 <div class="level-legend">
+        <div class="level-legend">
              <div class="legend-item clickable" data-level="elementary" onclick="goToRoadmap()">
                  <span class="legend-dot elementary"></span>
                  초등 과정
@@ -739,7 +1067,7 @@
                  <span class="legend-dot general"></span>
                  커리어 과정
              </div>
-         </div>
+        </div>
 
         <div class="filter-buttons">
             <button class="filter-btn active" onclick="filterCourses('all')">
@@ -761,7 +1089,7 @@
 
         <div class="curriculum-grid">
             <!-- 초등 과정 -->
-            <div class="track-card" data-level="elementary">
+            <div class="track-card" data-level="elementary" data-track="rookies" onclick="openModal('rookies')">
                 <div class="track-header">
                     <div class="track-icon"><i class="fas fa-cubes"></i></div>
                     <div>
@@ -777,7 +1105,7 @@
                 </ul>
             </div>
 
-            <div class="track-card" data-level="elementary">
+            <div class="track-card" data-level="elementary" data-track="starter" onclick="openModal('starter')">
                 <div class="track-header">
                     <div class="track-icon"><i class="fas fa-star"></i></div>
                     <div>
@@ -798,7 +1126,7 @@
             </div>
             
             <!-- 중등 기초/심화 과정 -->
-            <div class="track-card" data-level="elementary middle">
+            <div class="track-card" data-level="elementary middle" data-track="creator" onclick="openModal('creator')">
                 <div class="track-header">
                     <div class="track-icon"><i class="fas fa-palette"></i></div>
                     <div>
@@ -814,7 +1142,7 @@
                 </ul>
             </div>
 
-            <div class="track-card" data-level="elementary middle high">
+            <div class="track-card" data-level="elementary middle high" data-track="python" onclick="openModal('python')">
                 <div class="track-header">
                     <div class="track-icon"><i class="fa-brands fa-python"></i></div>
                     <div>
@@ -834,7 +1162,7 @@
                 </ul>
             </div>
 
-            <div class="track-card" data-level="middle high">
+            <div class="track-card" data-level="middle high" data-track="cpp" onclick="openModal('cpp')">
                 <div class="track-header">
                     <div class="track-icon"><i class="fas fa-terminal"></i></div>
                     <div>
@@ -854,7 +1182,7 @@
                 </ul>
             </div>
 
-            <div class="track-card" data-level="elementary middle">
+            <div class="track-card" data-level="elementary middle" data-track="olympiad" onclick="openModal('olympiad')">
                 <div class="track-header">
                     <div class="track-icon"><i class="fas fa-trophy"></i></div>
                     <div>
@@ -871,7 +1199,7 @@
             </div>
 
             <!-- 고등 심화 과정 (대입 연계) -->
-            <div class="track-card" data-level="middle high">
+            <div class="track-card" data-level="middle high" data-track="fusion" onclick="openModal('fusion')">
                 <div class="track-header">
                     <div class="track-icon"><i class="fas fa-flask-vial"></i></div>
                     <div>
@@ -898,7 +1226,7 @@
                 </ul>
             </div>
 
-            <div class="track-card" data-level="high">
+            <div class="track-card" data-level="high" data-track="performance" onclick="openModal('performance')">
                 <div class="track-header">
                     <div class="track-icon"><i class="fas fa-file-signature"></i></div>
                     <div>
@@ -925,7 +1253,7 @@
                 </ul>
             </div>
 
-            <div class="track-card" data-level="high">
+            <div class="track-card" data-level="high" data-track="fullstack" onclick="openModal('fullstack')">
                 <div class="track-header">
                     <div class="track-icon"><i class="fas fa-layer-group"></i></div>
                     <div>
@@ -952,7 +1280,7 @@
                 </ul>
             </div>
 
-            <div class="track-card" data-level="high">
+            <div class="track-card" data-level="high" data-track="ai" onclick="openModal('ai')">
                 <div class="track-header">
                     <div class="track-icon"><i class="fas fa-brain"></i></div>
                     <div>
@@ -974,7 +1302,7 @@
                 </ul>
             </div>
 
-            <div class="track-card" data-level="middle high">
+            <div class="track-card" data-level="middle high" data-track="unity" onclick="openModal('unity')">
                 <div class="track-header">
                     <div class="track-icon"><i class="fa-brands fa-unity"></i></div>
                     <div>
@@ -997,7 +1325,7 @@
             </div>
 
             <!-- 커리어 전환 과정 -->
-            <div class="track-card" data-level="general">
+            <div class="track-card" data-level="general" data-track="bootcamp" onclick="openModal('bootcamp')">
                 <div class="track-header">
                     <div class="track-icon"><i class="fas fa-user-tie"></i></div>
                     <div>
@@ -1031,6 +1359,178 @@
     </button>
 
     <script>
+        // 트랙 상세 정보 데이터
+        const trackData = {
+            rookies: {
+                title: "Rookies Track",
+                age: "7세 ~ 초등 저학년",
+                icon: "fas fa-cubes",
+                description: "놀이를 통해 자연스럽게 코딩 사고력을 기르는 첫 번째 단계입니다. 블록 기반 프로그래밍으로 논리적 사고와 문제해결 능력을 발달시킵니다.",
+                curriculum: [
+                    "레고 WeDo 로봇 조립 및 프로그래밍",
+                    "스크래치 주니어 기초 개념 익히기",
+                    "순차, 반복, 조건 논리 이해하기",
+                    "창의적 스토리텔링과 애니메이션 제작"
+                ],
+                growth: "🎯 논리적 사고력과 창의력을 기반으로 Starter Track으로 진급하여 본격적인 코딩 여정을 시작할 수 있습니다. 문제를 단계별로 해결하는 능력과 디지털 창작의 즐거움을 경험하게 됩니다.",
+                recommended: ["코딩을 처음 접하는 어린이", "창의적 활동을 좋아하는 아이", "로봇이나 게임에 관심이 많은 아이"]
+            },
+            starter: {
+                title: "Starter Track",
+                age: "초등 중/고학년",
+                icon: "fas fa-star",
+                description: "AI 시대에 맞는 기초 컴퓨팅 사고력을 키우는 단계입니다. 스크래치와 마인크래프트를 통해 재미있게 프로그래밍 기초를 다집니다.",
+                curriculum: [
+                    "스크래치 고급 프로젝트 및 AI 블록 활용",
+                    "마인크래프트 에듀케이션으로 3D 공간 코딩",
+                    "게임 제작 프로젝트 (미니게임 개발)",
+                    "팀워크 프로젝트 및 발표 경험"
+                ],
+                growth: "🚀 Creator Track이나 파이썬 기초로 진급하여 본격적인 텍스트 코딩에 도전할 수 있습니다. 알고리즘적 사고와 프로젝트 완성 능력을 갖추게 됩니다.",
+                recommended: ["블록 코딩에 익숙한 학생", "게임 개발에 관심있는 학생", "AI 기술을 배우고 싶은 학생"]
+            },
+            creator: {
+                title: "Creator Track",
+                age: "초등 고학년 ~ 중등",
+                icon: "fas fa-palette",
+                description: "모바일 앱과 게임을 직접 만들어보는 창작자 트랙입니다. 앱 인벤터와 로블록스를 통해 실제 사용할 수 있는 프로그램을 개발합니다.",
+                curriculum: [
+                    "MIT 앱 인벤터로 안드로이드 앱 개발",
+                    "로블록스 스튜디오를 활용한 3D 게임 제작",
+                    "UI/UX 디자인 기초 및 사용자 경험 설계",
+                    "앱스토어/게임 퍼블리싱 체험"
+                ],
+                growth: "🎨 파이썬이나 웹 개발로 진급하여 더 전문적인 개발자로 성장할 수 있습니다. 창작물을 실제 사용자들과 공유하는 경험을 통해 개발자 마인드를 형성합니다.",
+                recommended: ["앱 개발에 관심있는 학생", "게임 제작을 꿈꾸는 학생", "창작 활동을 좋아하는 학생"]
+            },
+            python: {
+                title: "파이썬 기초",
+                age: "초5+, 코딩 입문자",
+                icon: "fa-brands fa-python",
+                description: "가장 인기있는 프로그래밍 언어인 파이썬으로 텍스트 코딩에 입문합니다. 기초 문법부터 실용적인 프로그램 작성까지 단계적으로 학습합니다.",
+                curriculum: [
+                    "파이썬 기본 문법 (변수, 연산자, 조건문, 반복문)",
+                    "자료구조 (리스트, 딕셔너리, 튜플) 활용",
+                    "함수 작성 및 모듈 import 이해",
+                    "미니 프로젝트 (계산기, 퀴즈게임, 데이터 분석)"
+                ],
+                growth: "🐍 AI/머신러닝, 웹 개발, 데이터 분석 등 다양한 심화 분야로 확장 가능합니다. 프로그래밍의 핵심 개념을 확실히 익혀 어떤 언어든 쉽게 배울 수 있는 기반을 마련합니다.",
+                recommended: ["텍스트 코딩을 시작하려는 학생", "수학적 사고를 좋아하는 학생", "AI나 데이터에 관심있는 학생"]
+            },
+            cpp: {
+                title: "C/C++ & 알고리즘",
+                age: "중학생 이상, 개발자 지망생",
+                icon: "fas fa-terminal",
+                description: "컴퓨터 과학의 기초가 되는 C/C++ 언어와 알고리즘을 학습합니다. 메모리 관리와 효율적인 프로그래밍의 핵심을 배웁니다.",
+                curriculum: [
+                    "C언어 기본 문법 및 포인터 개념",
+                    "C++ 객체지향 프로그래밍 기초",
+                    "기본 자료구조 (스택, 큐, 연결리스트, 트리)",
+                    "정렬, 탐색 알고리즘 및 시간복잡도 분석"
+                ],
+                growth: "⚡ 정보올림피아드 도전, 대학 전공 준비, 시스템 프로그래밍 분야로 발전할 수 있습니다. 컴퓨터 과학의 깊은 이해를 바탕으로 어려운 문제를 효율적으로 해결하는 능력을 키웁니다.",
+                recommended: ["깊이 있는 학습을 원하는 학생", "컴퓨터공학 진로를 고려하는 학생", "수학적 사고가 뛰어난 학생"]
+            },
+            olympiad: {
+                title: "정보올림피아드 준비",
+                age: "초/중학생 영재",
+                icon: "fas fa-trophy",
+                description: "한국정보올림피아드(KOI) 대비 고급 알고리즘과 문제해결 전략을 집중 학습합니다. 국제 수준의 프로그래밍 실력을 기릅니다.",
+                curriculum: [
+                    "고급 자료구조 (세그먼트 트리, 유니온-파인드)",
+                    "그래프 이론 (DFS, BFS, 최단경로, MST)",
+                    "동적 프로그래밍 심화 문제",
+                    "KOI 기출문제 분석 및 실전 연습"
+                ],
+                growth: "🏆 KOI 본선 진출, 국제정보올림피아드(IOI) 도전, 명문대 특기자 전형, Google Code Jam 등 세계적인 프로그래밍 대회 참가 자격을 갖추게 됩니다.",
+                recommended: ["수학 영재급 학생", "프로그래밍에 특별한 재능을 보이는 학생", "국제대회 도전을 꿈꾸는 학생"]
+            },
+            fusion: {
+                title: "교과융합 프로젝트",
+                age: "중/고등학생 (생기부)",
+                icon: "fas fa-flask-vial",
+                description: "프로그래밍과 다른 교과목을 융합한 창의적 프로젝트로 생활기록부를 풍성하게 만듭니다. 실제 연구 경험을 통해 진로 탐색의 기회를 제공합니다.",
+                curriculum: [
+                    "파이썬으로 물리 법칙 시뮬레이션 (포물선 운동, 파동 등)",
+                    "데이터 분석으로 사회 현상 탐구 (인구, 경제 데이터)",
+                    "수학적 개념의 프로그래밍 구현 (프랙탈, 함수 그래프)",
+                    "개인별 관심 분야 심화 프로젝트"
+                ],
+                growth: "📊 대학 진학 시 자기소개서와 면접에서 활용할 수 있는 차별화된 경험을 쌓습니다. 융합적 사고력을 기반으로 창의적인 문제해결 능력을 갖춘 인재로 성장합니다.",
+                recommended: ["생기부 관리가 필요한 학생", "융합적 사고를 좋아하는 학생", "연구 활동에 관심있는 학생"]
+            },
+            performance: {
+                title: "고교 수행평가 대비",
+                age: "고등학생 (내신/세특)",
+                icon: "fas fa-file-signature",
+                description: "고등학교 정보 교과 내신 향상과 세부능력특기사항(세특) 관리를 위한 맞춤형 프로그램입니다. 체계적인 포트폴리오 관리로 대입을 준비합니다.",
+                curriculum: [
+                    "고교 정보 교과서 연계 프로젝트 기획",
+                    "파이썬/자바스크립트 기반 실습 과제 완성",
+                    "탐구보고서 작성 및 발표 준비",
+                    "세특 연계 포트폴리오 제작 및 관리"
+                ],
+                growth: "🎓 내신 1등급 달성과 함께 대학 입시에서 차별화된 세특을 바탕으로 컴퓨터 관련 학과 진학 시 큰 어드밴티지를 확보합니다. 대학 전공 수업 적응력도 크게 향상됩니다.",
+                recommended: ["내신 관리가 필요한 고등학생", "컴공 진학을 목표로 하는 학생", "체계적인 포트폴리오를 원하는 학생"]
+            },
+            fullstack: {
+                title: "웹 풀스택 개발",
+                age: "고등학생 (포트폴리오)",
+                icon: "fas fa-layer-group",
+                description: "실제 서비스 가능한 웹사이트를 만들어보는 실무형 프로젝트입니다. React와 Node.js를 활용해 프론트엔드부터 백엔드까지 전체 개발 과정을 경험합니다.",
+                curriculum: [
+                    "React 기반 모던 프론트엔드 개발",
+                    "Node.js와 Express로 서버 구축",
+                    "데이터베이스 설계 및 API 개발",
+                    "AWS/GCP 클라우드 배포 및 도메인 연결"
+                ],
+                growth: "🌐 실제 포트폴리오 웹사이트를 보유하게 되어 대학 입시나 취업 시 강력한 어필 포인트가 됩니다. 스타트업 창업이나 프리랜서 활동도 가능한 실무 역량을 갖추게 됩니다.",
+                recommended: ["웹 개발자를 꿈꾸는 학생", "창업에 관심있는 학생", "포트폴리오가 필요한 학생"]
+            },
+            ai: {
+                title: "AI & 머신러닝",
+                age: "고등학생 (심화탐구)",
+                icon: "fas fa-brain",
+                description: "인공지능의 원리를 이해하고 직접 AI 모델을 만들어보는 최첨단 교육과정입니다. 이론과 실습을 병행하여 미래 AI 전문가의 기초를 다집니다.",
+                curriculum: [
+                    "머신러닝 기초 이론 (지도학습, 비지도학습)",
+                    "딥러닝 신경망 구조 이해 및 구현",
+                    "PyTorch를 활용한 이미지 분류 모델 제작",
+                    "자연어 처리 및 ChatGPT 원리 탐구"
+                ],
+                growth: "🤖 AI 관련 학과 진학 시 압도적인 어드밴티지를 확보하며, 대학원 연구나 AI 스타트업 창업까지 가능한 전문성을 갖추게 됩니다. 4차 산업혁명 시대의 핵심 인재로 성장합니다.",
+                recommended: ["AI에 특별한 관심이 있는 학생", "수학적 사고가 뛰어난 학생", "연구자를 꿈꾸는 학생"]
+            },
+            unity: {
+                title: "Unity 게임 개발",
+                age: "중학생 이상, 게임 제작 희망자",
+                icon: "fa-brands fa-unity",
+                description: "전 세계에서 가장 많이 사용되는 게임 엔진인 Unity로 실제 플레이 가능한 게임을 제작합니다. 2D부터 3D까지 다양한 장르의 게임 개발을 경험합니다.",
+                curriculum: [
+                    "Unity 엔진 기초 및 C# 프로그래밍",
+                    "2D 플랫폼 게임 제작 (슈퍼마리오 스타일)",
+                    "3D 액션 게임 개발 (FPS 또는 TPS)",
+                    "모바일 게임 포팅 및 스토어 출시 체험"
+                ],
+                growth: "🎮 게임 개발자로의 진로를 확정하거나, 인디 게임 개발자로 창업도 가능합니다. 실제 플레이 가능한 게임 포트폴리오로 게임 회사 취업 시 큰 어드밴티지를 확보합니다.",
+                recommended: ["게임 개발자를 꿈꾸는 학생", "창의적 스토리텔링을 좋아하는 학생", "3D 디자인에 관심있는 학생"]
+            },
+            bootcamp: {
+                title: "커리어 전환 부트캠프",
+                age: "대학생, 취업/이직 준비생",
+                icon: "fas fa-user-tie",
+                description: "비전공자도 6개월 만에 개발자로 취업할 수 있도록 설계된 집중 과정입니다. 실무 중심의 프로젝트와 취업 지원 프로그램을 통해 확실한 커리어 전환을 지원합니다.",
+                curriculum: [
+                    "선택 트랙별 집중 교육 (프론트엔드/백엔드/AI)",
+                    "실무 프로젝트 (기업 연계 또는 창업 아이템)",
+                    "코딩테스트 대비 알고리즘 특훈",
+                    "이력서/포트폴리오 제작 및 면접 준비"
+                ],
+                growth: "💼 IT 대기업, 스타트업, 프리랜서 등 다양한 방향으로 취업이 가능하며, 평균 연봉 4000만원 이상의 개발자로 커리어를 시작할 수 있습니다. 평생 먹고살 기술을 확실히 익힙니다.",
+                recommended: ["개발자 전향을 고민하는 대학생", "이직을 준비하는 직장인", "창업을 고려하는 예비 창업가"]
+            }
+        };
+
         // 배경 파티클 생성
         function createParticles() {
             const container = document.getElementById('bgParticles');
@@ -1141,7 +1641,7 @@
                             entry.target.style.opacity = '1';
                             entry.target.style.transform = 'translateY(0)';
                         }, index * 100);
-                    }
+            }
                 });
             }, {
                 threshold: 0.1,
@@ -1156,7 +1656,90 @@
             });
         }
 
-                 // 로드맵 페이지로 이동
+                 // 모달 열기
+         function openModal(trackId) {
+             const modal = document.getElementById('trackModal');
+             const data = trackData[trackId];
+             
+             if (!data) return;
+             
+             // 트랙별 컬러 설정
+             const colorMap = {
+                 rookies: 'var(--success-gradient)',
+                 starter: 'var(--success-gradient)',
+                 creator: 'var(--secondary-gradient)',
+                 python: 'var(--secondary-gradient)',
+                 cpp: 'var(--secondary-gradient)',
+                 olympiad: 'var(--success-gradient)',
+                 fusion: 'var(--primary-gradient)',
+                 performance: 'var(--primary-gradient)',
+                 fullstack: 'var(--primary-gradient)',
+                 ai: 'var(--primary-gradient)',
+                 unity: 'var(--secondary-gradient)',
+                 bootcamp: 'var(--warning-gradient)'
+             };
+             
+             // 모달 내용 설정
+             document.getElementById('modalIcon').className = data.icon;
+             document.getElementById('modalTitle').textContent = data.title;
+             document.getElementById('modalAge').textContent = data.age;
+             document.getElementById('modalDescription').textContent = data.description;
+             document.getElementById('modalGrowth').textContent = data.growth;
+             
+             // 커리큘럼 리스트 생성
+             const curriculumList = document.getElementById('modalCurriculum');
+             curriculumList.innerHTML = '';
+             data.curriculum.forEach(item => {
+                 const li = document.createElement('li');
+                 li.textContent = item;
+                 curriculumList.appendChild(li);
+             });
+             
+             // 추천 대상 태그 생성
+             const recommendedDiv = document.getElementById('modalRecommended');
+             recommendedDiv.innerHTML = '';
+             data.recommended.forEach(item => {
+                 const tag = document.createElement('div');
+                 tag.className = 'recommend-tag';
+                 tag.textContent = item;
+                 recommendedDiv.appendChild(tag);
+             });
+             
+             // 아이콘 컬러 설정
+             const modalIcon = document.querySelector('.modal-icon');
+             modalIcon.style.setProperty('--card-gradient', colorMap[trackId]);
+             
+             // 모달 표시
+             modal.classList.add('active');
+             document.body.style.overflow = 'hidden';
+             
+             // 포커스 트랩
+             const closeBtn = document.querySelector('.modal-close');
+             closeBtn.focus();
+         }
+         
+         // 모달 닫기
+         function closeModal() {
+             const modal = document.getElementById('trackModal');
+             modal.classList.remove('active');
+             document.body.style.overflow = 'auto';
+         }
+         
+         // ESC 키로 모달 닫기
+         document.addEventListener('keydown', (e) => {
+             if (e.key === 'Escape') {
+                 closeModal();
+             }
+         });
+         
+         // 모달 오버레이 클릭시 닫기
+         document.getElementById('trackModal').addEventListener('click', (e) => {
+             if (e.target.classList.contains('modal-overlay')) {
+                 closeModal();
+             }
+         });
+
+         // 로드맵 페이지로 이동
          function goToRoadmap() {
              // 부드러운 페이지 전환 효과
              document.body.style.opacity = '0.8';
@@ -1190,7 +1773,7 @@
                 particle.style.animationPlayState = 
                     document.hidden ? 'paused' : 'running';
             });
-        });
+            });
     </script>
 </body>
 </html>
