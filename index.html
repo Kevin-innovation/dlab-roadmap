@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D.LAB | 차세대 코딩 교육 로드맵</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(45deg, #FF6B6B, #FFA07A);
+            --primary-color: #FF6B6B;
+            --bg-color: #f9f9fe;
+            --card-bg-color: #ffffff;
+            --text-color: #1e2125;
+            --muted-color: #6a7178;
+            --border-color: #e9ecef;
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.05);
+            --shadow-lg: 0 15px 35px rgba(255, 107, 107, 0.15), 0 5px 15px rgba(0,0,0,0.07);
+            --border-radius-md: 16px;
+            --border-radius-lg: 24px;
+            --transition-smooth: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --color-elementary: #4CAF50;
+            --color-middle: #2196F3;
+            --color-high: #9C27B0;
+            --color-general: #FF9800;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+
+        .container { max-width: 1280px; margin: 0 auto; padding: 50px 20px; }
+
+        /* [최종 수정] 헤더 타이틀 가시성 완벽 해결 */
+        .header { text-align: center; margin-bottom: 40px; }
+        .header h1 {
+            font-size: 3.8rem;
+            font-weight: 900;
+            color: var(--primary-color); /* 기본 색상 항상 유지 */
+            background-color: transparent; /* 배경은 투명하게 시작 */
+            -webkit-text-fill-color: currentColor; /* 텍스트 채움색은 color 속성을 따름 */
+            background-clip: text; /* 배경을 텍스트에만 적용 준비 */
+            transition: -webkit-text-fill-color 0.6s ease-in-out; /* 채움색 전환에 애니메이션 적용 */
+            margin-bottom: 16px;
+            letter-spacing: -2.5px;
+            min-height: 70px; 
+        }
+        .header h1.gradient-ready {
+            background-image: var(--primary-gradient); /* 그라데이션 배경 이미지 적용 */
+            -webkit-text-fill-color: transparent; /* 텍스트 채움색을 투명으로 만들어 배경이 보이게 함 */
+        }
+        .header h1 .char { opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s; display: inline-block; }
+        .header p { font-size: 1.3rem; color: var(--muted-color); max-width: 700px; margin: 0 auto 30px; }
+        .cta-btn {
+            background: var(--primary-gradient); color: white; border: none; padding: 16px 40px; border-radius: 50px;
+            font-size: 1.1rem; font-weight: 700; cursor: pointer; box-shadow: var(--shadow-lg);
+            transition: var(--transition-smooth); display: inline-block; text-decoration: none;
+        }
+        .cta-btn:hover { transform: translateY(-5px) scale(1.03); box-shadow: 0 20px 40px rgba(255, 107, 107, 0.25); }
+
+        .level-legend {
+            display: flex; justify-content: center; gap: 20px; margin: 30px auto; padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2); border-radius: var(--border-radius-md); max-width: max-content;
+        }
+        .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: transform 0.2s; }
+        .legend-item:hover { transform: scale(1.1); }
+        .legend-dot { width: 14px; height: 14px; border-radius: 50%; }
+        .legend-dot.elementary { background-color: var(--color-elementary); }
+        .legend-dot.middle { background-color: var(--color-middle); }
+        .legend-dot.high { background-color: var(--color-high); }
+        .legend-dot.general { background-color: var(--color-general); }
+
+        .filter-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin: 40px 0 60px; }
+        .filter-btn {
+            background-color: var(--card-bg-color); color: var(--muted-color); border: 1px solid var(--border-color);
+            padding: 12px 28px; border-radius: 50px; cursor: pointer;
+            font-weight: 600; font-size: 1rem; transition: var(--transition-smooth);
+        }
+        .filter-btn i { margin-right: 8px; }
+        .filter-btn:hover { color: var(--primary-color); border-color: var(--primary-color); transform: translateY(-3px); }
+        .filter-btn.active { background: var(--primary-gradient); color: white; border-color: transparent; box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+
+        .curriculum-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 30px; }
+        .track-card {
+            background-color: var(--card-bg-color); border-radius: var(--border-radius-lg); padding: 28px;
+            box-shadow: var(--shadow-md); transition: var(--transition-smooth);
+            border: 5px solid transparent; border-top-style: solid;
+            opacity: 1; transform: scale(1);
+        }
+        .track-card:hover { transform: translateY(-10px) rotate(0.5deg); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+        
+        .track-card[data-level*="elementary"] { border-image: linear-gradient(to right, var(--color-elementary), #81C784) 1; }
+        .track-card[data-level*="elementary"] .track-icon { background: linear-gradient(45deg, var(--color-elementary), #81C784); }
+        .track-card[data-level*="middle"] { border-image: linear-gradient(to right, var(--color-middle), #64B5F6) 1; }
+        .track-card[data-level*="middle"] .track-icon { background: linear-gradient(45deg, var(--color-middle), #64B5F6); }
+        .track-card[data-level*="high"] { border-image: linear-gradient(to right, var(--color-high), #BA68C8) 1; }
+        .track-card[data-level*="high"] .track-icon { background: linear-gradient(45deg, var(--color-high), #BA68C8); }
+        .track-card[data-level*="general"] { border-image: linear-gradient(to right, var(--color-general), #FFB74D) 1; }
+        .track-card[data-level*="general"] .track-icon { background: linear-gradient(45deg, var(--color-general), #FFB74D); }
+        
+        .track-header { display: flex; align-items: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border-color); }
+        .track-icon { font-size: 1.8rem; margin-right: 16px; width: 64px; height: 64px; border-radius: var(--border-radius-md); display: grid; place-items: center; color: white; flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .track-title { font-size: 1.6rem; font-weight: 700; line-height: 1.3; }
+        .track-age { font-size: 0.95rem; color: var(--muted-color); font-weight: 500; }
+        
+        .course-list { list-style: none; }
+        .course-item {
+            display: flex; justify-content: space-between; align-items: center;
+            gap: 8px; padding: 14px 8px; border-bottom: 1px solid #f2f3f5;
+            font-size: 1.05rem; font-weight: 500;
+        }
+        .course-item:last-child { border-bottom: none; }
+        .course-name { flex: 1 1 auto; word-break: keep-all; }
+        .new-badge, .duration { flex-shrink: 0; }
+        .new-badge {
+            background: var(--primary-gradient); color: white; padding: 3px 10px; border-radius: 50px; font-size: 0.75rem; font-weight: 700;
+            margin-left: 4px; vertical-align: middle; position: relative; overflow: hidden;
+        }
+        .track-title .new-badge { font-size: 0.9rem; vertical-align: top; }
+        .new-badge::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(45deg); animation: new-glow 2.5s linear infinite;
+        }
+        @keyframes new-glow { from { transform: rotate(45deg) translateX(-150%); } to { transform: rotate(45deg) translateX(150%); } }
+
+        .duration { font-size: 0.9rem; color: var(--muted-color); font-weight: 600; background-color: var(--border-color); padding: 4px 12px; border-radius: 50px; white-space: nowrap; }
+
+        #back-to-top {
+            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px;
+            background: var(--primary-gradient); color: white; border-radius: 50%; border: none;
+            display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer;
+            box-shadow: var(--shadow-lg); opacity: 0; visibility: hidden;
+            transform: translateY(20px); transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+        }
+        #back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+
+        @media (max-width: 992px) { .header h1 { font-size: 3rem; } }
+        @media (max-width: 768px) { .container { padding: 40px 15px; } .header h1 { font-size: 2.5rem; } .header p { font-size: 1.1rem; } .filter-buttons, .level-legend { flex-wrap: wrap; gap: 10px; } .filter-btn { padding: 10px 20px; font-size: 0.95rem;} }
+        @media (max-width: 576px) { .curriculum-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 id="main-title">D.LAB 수성캠퍼스<br>코딩 로드맵</h1>
+            <p>개인의 목표와 수준에 맞춰 설계된 최적의 학습 경로. <br>초등부터 성인까지, 당신의 잠재력을 코드로 실현하세요.</p>
+            <a href="#" class="cta-btn"><i class="fas fa-comments"></i> 1:1 맞춤 상담 신청</a>
+        </header>
+
+        <div class="level-legend">
+            <div class="legend-item" data-level="elementary"><span class="legend-dot elementary"></span>초등 과정</div>
+            <div class="legend-item" data-level="middle"><span class="legend-dot middle"></span>중등 과정</div>
+            <div class="legend-item" data-level="high"><span class="legend-dot high"></span>고등 과정</div>
+            <div class="legend-item" data-level="general"><span class="legend-dot general"></span>커리어 과정</div>
+        </div>
+
+        <div class="filter-buttons">
+            <button class="filter-btn active" onclick="filterCourses('all')"><i class="fas fa-border-all"></i> 전체</button>
+            <button class="filter-btn" onclick="filterCourses('elementary')"><i class="fas fa-child"></i> 초등</button>
+            <button class="filter-btn" onclick="filterCourses('middle')"><i class="fas fa-rocket"></i> 중등</button>
+            <button class="filter-btn" onclick="filterCourses('high')"><i class="fas fa-atom"></i> 고등</button>
+            <button class="filter-btn" onclick="filterCourses('general')"><i class="fas fa-briefcase"></i> 커리어</button>
+        </div>
+
+        <div class="curriculum-grid">
+            <!-- 그리드 내용은 이전과 동일하게 유지됩니다 -->
+            <!-- 초등 과정 -->
+            <div class="track-card" data-level="elementary"><div class="track-header"><div class="track-icon"><i class="fas fa-cubes"></i></div><div><div class="track-title">Rookies Track</div><div class="track-age">7세 ~ 초등 저학년</div></div></div><ul class="course-list"><li class="course-item"><span class="course-name">레고 WeDo / 스크래치 주니어</span><span class="duration">12개월+</span></li></ul></div>
+            <div class="track-card" data-level="elementary"><div class="track-header"><div class="track-icon"><i class="fas fa-star"></i></div><div><div class="track-title">Starter Track</div><div class="track-age">초등 중/고학년</div></div></div><ul class="course-list"><li class="course-item"><span class="course-name">스크래치 X AI</span><span class="duration">6개월</span></li><li class="course-item"><span class="course-name">마인크래프트 코딩</span><span class="duration">6개월</span></li></ul></div>
+            
+            <!-- 중등 기초/심화 과정 -->
+            <div class="track-card" data-level="elementary middle"><div class="track-header"><div class="track-icon"><i class="fas fa-palette"></i></div><div><div class="track-title">Creator Track</div><div class="track-age">초등 고학년 ~ 중등</div></div></div><ul class="course-list"><li class="course-item"><span class="course-name">앱 인벤터 / 로블록스</span><span class="duration">각 6개월</span></li></ul></div>
+            <div class="track-card" data-level="elementary middle high"><div class="track-header"><div class="track-icon"><i class="fa-brands fa-python"></i></div><div><div class="track-title">파이썬 기초</div><div class="track-age">초5+, 코딩 입문자</div></div></div><ul class="course-list"><li class="course-item"><span class="course-name">기초 문법 & 자료구조</span><span class="duration">3개월</span></li><li class="course-item"><span class="course-name">함수와 모듈</span><span class="duration">2개월</span></li></ul></div>
+            <div class="track-card" data-level="middle high"><div class="track-header"><div class="track-icon"><i class="fas fa-terminal"></i></div><div><div class="track-title">C/C++ & 알고리즘</div><div class="track-age">중학생 이상, 개발자 지망생</div></div></div><ul class="course-list"><li class="course-item"><span class="course-name">C언어/C++ 기초</span><span class="duration">6개월</span></li><li class="course-item"><span class="course-name">자료구조 & 알고리즘</span><span class="duration">6개월</span></li></ul></div>
+            <div class="track-card" data-level="elementary middle"><div class="track-header"><div class="track-icon"><i class="fas fa-trophy"></i></div><div><div class="track-title">정보올림피아드 준비</div><div class="track-age">초/중학생 영재</div></div></div><ul class="course-list"><li class="course-item"><span class="course-name">KOI 대비 알고리즘 심화</span><span class="duration">상시</span></li></ul></div>
+
+            <!-- 고등 심화 과정 (대입 연계) -->
+            <div class="track-card" data-level="middle high"><div class="track-header"><div class="track-icon"><i class="fas fa-flask-vial"></i></div><div><div class="track-title">교과융합 프로젝트</div><div class="track-age">중/고등학생 (생기부)</div></div></div><ul class="course-list"><li class="course-item"><span class="course-name">파이썬 물리 시뮬레이션</span><span class="new-badge">NEW</span><span class="duration">3개월</span></li><li class="course-item"><span class="course-name">데이터로 보는 사회/역사</span><span class="new-badge">NEW</span><span class="duration">3개월</span></li><li class="course-item"><span class="course-name">코드로 푸는 수학/과학</span><span class="new-badge">NEW</span><span class="duration">3개월</span></li></ul></div>
+            <div class="track-card" data-level="high"><div class="track-header"><div class="track-icon"><i class="fas fa-file-signature"></i></div><div><div class="track-title">고교 수행평가 대비</div><div class="track-age">고등학생 (내신/세특)</div></div></div><ul class="course-list"><li class="course-item"><span class="course-name">탐구보고서 주제 선정</span><span class="new-badge">NEW</span><span class="duration">1개월</span></li><li class="course-item"><span class="course-name">산출물 프로그래밍 구현</span><span class="new-badge">NEW</span><span class="duration">3개월</span></li><li class="course-item"><span class="course-name">발표 및 포트폴리오 관리</span><span class="new-badge">NEW</span><span class="duration">1개월</span></li></ul></div>
+            <div class="track-card" data-level="high"><div class="track-header"><div class="track-icon"><i class="fas fa-layer-group"></i></div><div><div class="track-title">웹 풀스택 개발</div><div class="track-age">고등학생 (포트폴리오)</div></div></div><ul class="course-list"><li class="course-item"><span class="course-name">React & Node.js</span><span class="new-badge">NEW</span><span class="duration">6개월</span></li><li class="course-item"><span class="course-name">클라우드 배포 (AWS/GCP)</span><span class="new-badge">NEW</span><span class="duration">2개월</span></li><li class="course-item"><span class="course-name">팀 프로젝트 & 런칭</span><span class="new-badge">NEW</span><span class="duration">3개월</span></li></ul></div>
+            <div class="track-card" data-level="high"><div class="track-header"><div class="track-icon"><i class="fas fa-brain"></i></div><div><div class="track-title">AI & 머신러닝</div><div class="track-age">고등학생 (심화탐구)</div></div></div><ul class="course-list"><li class="course-item"><span class="course-name">머신러닝 & 딥러닝 이론</span><span class="new-badge">NEW</span><span class="duration">6개월</span></li><li class="course-item"><span class="course-name">AI 모델 구현 (PyTorch)</span><span class="new-badge">NEW</span><span class="duration">6개월</span></li></ul></div>
+            <div class="track-card" data-level="middle high"><div class="track-header"><div class="track-icon"><i class="fa-brands fa-unity"></i></div><div><div class="track-title">Unity 게임 개발</div><div class="track-age">중학생 이상, 게임 제작 희망자</div></div></div><ul class="course-list"><li class="course-item"><span class="course-name">Unity 엔진 및 C# 기초</span><span class="new-badge">NEW</span><span class="duration">4개월</span></li><li class="course-item"><span class="course-name">2D/3D 게임 프로젝트</span><span class="new-badge">NEW</span><span class="duration">6개월</span></li></ul></div>
+
+            <!-- 커리어 전환 과정 -->
+            <div class="track-card" data-level="general"><div class="track-header"><div class="track-icon"><i class="fas fa-user-tie"></i></div><div><div class="track-title">커리어 전환 부트캠프</div><div class="track-age">대학생, 취업/이직 준비생</div></div></div><ul class="course-list"><li class="course-item"><span class="course-name">프론트엔드 집중 과정</span><span class="new-badge">NEW</span><span class="duration">6개월</span></li><li class="course-item"><span class="course-name">백엔드(Java/Spring) 과정</span><span class="new-badge">NEW</span><span class="duration">6개월</span></li><li class="course-item"><span class="course-name">AI 데이터 분석 과정</span><span class="new-badge">NEW</span><span class="duration">6개월</span></li></ul></div>
+        </div>
+    </div>
+    
+    <button id="back-to-top" aria-label="맨 위로 가기"><i class="fas fa-arrow-up"></i></button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const legendItems = document.querySelectorAll('.legend-item');
+            const allCards = document.querySelectorAll('.track-card');
+            legendItems.forEach(item => {
+                item.addEventListener('mouseenter', () => {
+                    const level = item.dataset.level;
+                    allCards.forEach(card => {
+                        card.style.transition = 'opacity 0.3s, transform 0.3s';
+                        if (card.dataset.level.includes(level)) {
+                            card.style.opacity = '1';
+                            card.style.transform = 'scale(1.03)';
+                        } else {
+                            card.style.opacity = '0.2';
+                            card.style.transform = 'scale(0.95)';
+                        }
+                    });
+                });
+                item.addEventListener('mouseleave', () => {
+                    const activeFilter = document.querySelector('.filter-btn.active').getAttribute('onclick').match(/'([^']+)'/)[1];
+                    filterCourses(activeFilter, false);
+                });
+            });
+
+            const backToTopButton = document.getElementById('back-to-top');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+            backToTopButton.addEventListener('click', () => { window.scrollTo({ top: 0 }); });
+        });
+
+        function filterCourses(type, isButtonClick = true) {
+            if (isButtonClick && event) {
+                const buttons = document.querySelectorAll('.filter-btn');
+                buttons.forEach(btn => btn.classList.remove('active'));
+                event.currentTarget.classList.add('active');
+            }
+            
+            const cards = document.querySelectorAll('.track-card');
+            cards.forEach(card => {
+                const cardLevels = card.dataset.level;
+                const matches = (type === 'all' || (cardLevels && cardLevels.includes(type)));
+                card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                if (matches) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'scale(1)';
+                    card.style.pointerEvents = 'auto';
+                } else {
+                    card.style.opacity = '0.15';
+                    card.style.transform = 'scale(0.95)';
+                    card.style.pointerEvents = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
