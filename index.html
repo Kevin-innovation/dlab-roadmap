@@ -3,235 +3,1062 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D.LAB | 차세대 코딩 교육 로드맵</title>
+    <title>D.LAB | 차세대 코딩 교육 플랫폼</title>
     <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         :root {
-            --primary-gradient: linear-gradient(45deg, #FF6B6B, #FFA07A);
-            --primary-color: #FF6B6B;
-            --bg-color: #f9f9fe;
-            --card-bg-color: #ffffff;
-            --text-color: #1e2125;
-            --muted-color: #6a7178;
-            --border-color: #e9ecef;
-            --shadow-md: 0 8px 24px rgba(0,0,0,0.05);
-            --shadow-lg: 0 15px 35px rgba(255, 107, 107, 0.15), 0 5px 15px rgba(0,0,0,0.07);
-            --border-radius-md: 16px;
-            --border-radius-lg: 24px;
-            --transition-smooth: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
-            --color-elementary: #4CAF50;
-            --color-middle: #2196F3;
-            --color-high: #9C27B0;
-            --color-general: #FF9800;
+            --primary-gradient: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            --secondary-gradient: linear-gradient(135deg, #4facfe, #00f2fe);
+            --success-gradient: linear-gradient(135deg, #11998e, #38ef7d);
+            --warning-gradient: linear-gradient(135deg, #fc4a1a, #f7b733);
+            
+            --bg-dark: #0a0a1a;
+            --bg-mid: #1a1a2e;
+            --bg-light: #16213e;
+            --text-light: #e2e8f0;
+            --text-accent: #94a3b8;
+            --text-muted: #64748b;
+            
+            --color-elementary: #4ade80;
+            --color-middle: #3b82f6;
+            --color-high: #a855f7;
+            --color-general: #f59e0b;
+            
+            --shadow-glow: 0 0 40px rgba(102, 126, 234, 0.3);
+            --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.3);
+            --border-radius: 20px;
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Pretendard', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
             line-height: 1.7;
+            position: relative;
         }
 
-        .container { max-width: 1280px; margin: 0 auto; padding: 50px 20px; }
+        /* 배경 파티클 효과 */
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
 
-        /* [최종 수정] 헤더 타이틀 가시성 완벽 해결 */
-        .header { text-align: center; margin-bottom: 40px; }
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(102, 126, 234, 0.4);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg); 
+                opacity: 0.2; 
+            }
+            50% { 
+                transform: translateY(-30px) rotate(180deg); 
+                opacity: 0.8; 
+            }
+        }
+
+        /* 메인 컨테이너 */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* 헤더 */
+        .header {
+            text-align: center;
+            margin-bottom: 100px;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: -1;
+            animation: pulse-glow 6s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { 
+                transform: translateX(-50%) scale(1); 
+                opacity: 0.3; 
+            }
+            50% { 
+                transform: translateX(-50%) scale(1.3); 
+                opacity: 0.7; 
+            }
+        }
+
         .header h1 {
-            font-size: 3.8rem;
+            font-size: clamp(3rem, 8vw, 5rem);
             font-weight: 900;
-            color: var(--primary-color); /* 기본 색상 항상 유지 */
-            background-color: transparent; /* 배경은 투명하게 시작 */
-            -webkit-text-fill-color: currentColor; /* 텍스트 채움색은 color 속성을 따름 */
-            background-clip: text; /* 배경을 텍스트에만 적용 준비 */
-            transition: -webkit-text-fill-color 0.6s ease-in-out; /* 채움색 전환에 애니메이션 적용 */
-            margin-bottom: 16px;
-            letter-spacing: -2.5px;
-            min-height: 70px; 
+            background: var(--primary-gradient);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 8s ease infinite;
+            margin-bottom: 24px;
+            letter-spacing: -3px;
+            line-height: 1.1;
         }
-        .header h1.gradient-ready {
-            background-image: var(--primary-gradient); /* 그라데이션 배경 이미지 적용 */
-            -webkit-text-fill-color: transparent; /* 텍스트 채움색을 투명으로 만들어 배경이 보이게 함 */
-        }
-        .header h1 .char { opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s; display: inline-block; }
-        .header p { font-size: 1.3rem; color: var(--muted-color); max-width: 700px; margin: 0 auto 30px; }
-        .cta-btn {
-            background: var(--primary-gradient); color: white; border: none; padding: 16px 40px; border-radius: 50px;
-            font-size: 1.1rem; font-weight: 700; cursor: pointer; box-shadow: var(--shadow-lg);
-            transition: var(--transition-smooth); display: inline-block; text-decoration: none;
-        }
-        .cta-btn:hover { transform: translateY(-5px) scale(1.03); box-shadow: 0 20px 40px rgba(255, 107, 107, 0.25); }
 
-        .level-legend {
-            display: flex; justify-content: center; gap: 20px; margin: 30px auto; padding: 15px 30px;
-            background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2); border-radius: var(--border-radius-md); max-width: max-content;
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-        .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: transform 0.2s; }
-        .legend-item:hover { transform: scale(1.1); }
-        .legend-dot { width: 14px; height: 14px; border-radius: 50%; }
+
+        .header p {
+            font-size: 1.4rem;
+            color: var(--text-accent);
+            max-width: 800px;
+            margin: 0 auto 40px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.5s forwards;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* CTA 버튼 컨테이너 */
+        .cta-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.8s forwards;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 18px 45px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: var(--shadow-glow);
+            transition: var(--transition);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-btn.secondary {
+            background: transparent;
+            border: 2px solid rgba(102, 126, 234, 0.5);
+            color: var(--text-light);
+        }
+
+        .cta-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .cta-btn:hover::before {
+            left: 100%;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .cta-btn.secondary:hover {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: rgba(102, 126, 234, 0.8);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        /* 반응형 CTA 버튼 */
+        @media (max-width: 768px) {
+            .cta-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .cta-btn {
+                width: 280px;
+                text-align: center;
+            }
+        }
+
+        /* 레벨 범례 */
+        .level-legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 60px auto;
+            padding: 20px 40px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            max-width: max-content;
+            opacity: 0;
+            animation: fadeInUp 1s ease 1s forwards;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 8px 16px;
+            border-radius: 30px;
+        }
+
+                 .legend-item:hover {
+             transform: scale(1.1);
+             background: rgba(255, 255, 255, 0.1);
+         }
+
+         .legend-item.clickable {
+             position: relative;
+         }
+
+         .legend-item.clickable::after {
+             content: '👆 클릭하여 성장 여정 보기';
+             position: absolute;
+             bottom: -25px;
+             left: 50%;
+             transform: translateX(-50%);
+             font-size: 0.7rem;
+             color: var(--text-muted);
+             opacity: 0;
+             transition: opacity 0.3s ease;
+             white-space: nowrap;
+         }
+
+         .legend-item.clickable:hover::after {
+             opacity: 1;
+         }
+
+        .legend-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .legend-dot::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            background: inherit;
+            opacity: 0.3;
+            animation: ping 2s ease-in-out infinite;
+        }
+
+        @keyframes ping {
+            0% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.3); opacity: 0.1; }
+            100% { transform: scale(1); opacity: 0.3; }
+        }
+
         .legend-dot.elementary { background-color: var(--color-elementary); }
         .legend-dot.middle { background-color: var(--color-middle); }
         .legend-dot.high { background-color: var(--color-high); }
         .legend-dot.general { background-color: var(--color-general); }
 
-        .filter-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin: 40px 0 60px; }
+        /* 필터 버튼 */
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 80px 0;
+            opacity: 0;
+            animation: fadeInUp 1s ease 1.2s forwards;
+        }
+
         .filter-btn {
-            background-color: var(--card-bg-color); color: var(--muted-color); border: 1px solid var(--border-color);
-            padding: 12px 28px; border-radius: 50px; cursor: pointer;
-            font-weight: 600; font-size: 1rem; transition: var(--transition-smooth);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-accent);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 14px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
         }
-        .filter-btn i { margin-right: 8px; }
-        .filter-btn:hover { color: var(--primary-color); border-color: var(--primary-color); transform: translateY(-3px); }
-        .filter-btn.active { background: var(--primary-gradient); color: white; border-color: transparent; box-shadow: var(--shadow-lg); transform: translateY(-3px); }
 
-        .curriculum-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 30px; }
+        .filter-btn i {
+            margin-right: 10px;
+            font-size: 1.1em;
+        }
+
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .filter-btn:hover::before {
+            left: 100%;
+        }
+
+        .filter-btn:hover {
+            color: var(--text-light);
+            border-color: rgba(102, 126, 234, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .filter-btn.active {
+            background: var(--primary-gradient);
+            color: white;
+            border-color: transparent;
+            box-shadow: var(--shadow-glow);
+            transform: translateY(-3px);
+        }
+
+        /* 커리큘럼 그리드 */
+        .curriculum-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 40px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 1.4s forwards;
+        }
+
         .track-card {
-            background-color: var(--card-bg-color); border-radius: var(--border-radius-lg); padding: 28px;
-            box-shadow: var(--shadow-md); transition: var(--transition-smooth);
-            border: 5px solid transparent; border-top-style: solid;
-            opacity: 1; transform: scale(1);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
         }
-        .track-card:hover { transform: translateY(-10px) rotate(0.5deg); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
-        
-        .track-card[data-level*="elementary"] { border-image: linear-gradient(to right, var(--color-elementary), #81C784) 1; }
-        .track-card[data-level*="elementary"] .track-icon { background: linear-gradient(45deg, var(--color-elementary), #81C784); }
-        .track-card[data-level*="middle"] { border-image: linear-gradient(to right, var(--color-middle), #64B5F6) 1; }
-        .track-card[data-level*="middle"] .track-icon { background: linear-gradient(45deg, var(--color-middle), #64B5F6); }
-        .track-card[data-level*="high"] { border-image: linear-gradient(to right, var(--color-high), #BA68C8) 1; }
-        .track-card[data-level*="high"] .track-icon { background: linear-gradient(45deg, var(--color-high), #BA68C8); }
-        .track-card[data-level*="general"] { border-image: linear-gradient(to right, var(--color-general), #FFB74D) 1; }
-        .track-card[data-level*="general"] .track-icon { background: linear-gradient(45deg, var(--color-general), #FFB74D); }
-        
-        .track-header { display: flex; align-items: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border-color); }
-        .track-icon { font-size: 1.8rem; margin-right: 16px; width: 64px; height: 64px; border-radius: var(--border-radius-md); display: grid; place-items: center; color: white; flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .track-title { font-size: 1.6rem; font-weight: 700; line-height: 1.3; }
-        .track-age { font-size: 0.95rem; color: var(--muted-color); font-weight: 500; }
-        
-        .course-list { list-style: none; }
+
+        .track-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--card-gradient);
+            border-radius: 24px 24px 0 0;
+        }
+
+        .track-card[data-level*="elementary"] {
+            --card-gradient: var(--success-gradient);
+            --card-glow: rgba(74, 222, 128, 0.3);
+        }
+
+        .track-card[data-level*="middle"] {
+            --card-gradient: var(--secondary-gradient);
+            --card-glow: rgba(59, 130, 246, 0.3);
+        }
+
+        .track-card[data-level*="high"] {
+            --card-gradient: var(--primary-gradient);
+            --card-glow: rgba(168, 85, 247, 0.3);
+        }
+
+        .track-card[data-level*="general"] {
+            --card-gradient: var(--warning-gradient);
+            --card-glow: rgba(245, 158, 11, 0.3);
+        }
+
+        .track-card:hover {
+            transform: translateY(-15px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 
+                var(--shadow-lg),
+                0 0 40px var(--card-glow);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* 트랙 헤더 */
+        .track-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .track-icon {
+            font-size: 2rem;
+            margin-right: 20px;
+            width: 70px;
+            height: 70px;
+            border-radius: var(--border-radius);
+            display: grid;
+            place-items: center;
+            color: white;
+            flex-shrink: 0;
+            background: var(--card-gradient);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .track-icon::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            background: var(--card-gradient);
+            z-index: -1;
+            animation: icon-pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes icon-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .track-title {
+            font-size: 1.7rem;
+            font-weight: 800;
+            line-height: 1.3;
+            color: var(--text-light);
+            margin-bottom: 4px;
+        }
+
+        .track-age {
+            font-size: 1rem;
+            color: var(--text-accent);
+            font-weight: 500;
+        }
+
+        /* 코스 리스트 */
+        .course-list {
+            list-style: none;
+        }
+
         .course-item {
-            display: flex; justify-content: space-between; align-items: center;
-            gap: 8px; padding: 14px 8px; border-bottom: 1px solid #f2f3f5;
-            font-size: 1.05rem; font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 1.05rem;
+            font-weight: 500;
+            transition: var(--transition);
         }
-        .course-item:last-child { border-bottom: none; }
-        .course-name { flex: 1 1 auto; word-break: keep-all; }
-        .new-badge, .duration { flex-shrink: 0; }
+
+        .course-item:last-child {
+            border-bottom: none;
+        }
+
+        .course-item:hover {
+            color: var(--text-light);
+            transform: translateX(8px);
+        }
+
+        .course-name {
+            flex: 1 1 auto;
+            word-break: keep-all;
+            color: var(--text-accent);
+        }
+
+        .new-badge,
+        .duration {
+            flex-shrink: 0;
+        }
+
         .new-badge {
-            background: var(--primary-gradient); color: white; padding: 3px 10px; border-radius: 50px; font-size: 0.75rem; font-weight: 700;
-            margin-left: 4px; vertical-align: middle; position: relative; overflow: hidden;
+            background: var(--primary-gradient);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-left: 8px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
-        .track-title .new-badge { font-size: 0.9rem; vertical-align: top; }
+
         .new-badge::after {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0) 100%);
-            transform: rotate(45deg); animation: new-glow 2.5s linear infinite;
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(45deg);
+            animation: shimmer 3s linear infinite;
         }
-        @keyframes new-glow { from { transform: rotate(45deg) translateX(-150%); } to { transform: rotate(45deg) translateX(150%); } }
 
-        .duration { font-size: 0.9rem; color: var(--muted-color); font-weight: 600; background-color: var(--border-color); padding: 4px 12px; border-radius: 50px; white-space: nowrap; }
+        @keyframes shimmer {
+            from { transform: rotate(45deg) translateX(-150%); }
+            to { transform: rotate(45deg) translateX(150%); }
+        }
 
+        .duration {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 14px;
+            border-radius: 50px;
+            white-space: nowrap;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* 백 투 탑 버튼 */
         #back-to-top {
-            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px;
-            background: var(--primary-gradient); color: white; border-radius: 50%; border: none;
-            display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer;
-            box-shadow: var(--shadow-lg); opacity: 0; visibility: hidden;
-            transform: translateY(20px); transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 60px;
+            height: 60px;
+            background: var(--primary-gradient);
+            color: white;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-glow);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px) scale(0.8);
+            transition: all 0.4s ease;
+            z-index: 1000;
         }
-        #back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
 
-        @media (max-width: 992px) { .header h1 { font-size: 3rem; } }
-        @media (max-width: 768px) { .container { padding: 40px 15px; } .header h1 { font-size: 2.5rem; } .header p { font-size: 1.1rem; } .filter-buttons, .level-legend { flex-wrap: wrap; gap: 10px; } .filter-btn { padding: 10px 20px; font-size: 0.95rem;} }
-        @media (max-width: 576px) { .curriculum-grid { grid-template-columns: 1fr; } }
+        #back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        #back-to-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        /* 로딩 애니메이션 */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(102, 126, 234, 0.3);
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 1200px) {
+            .curriculum-grid {
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 15px;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header p {
+                font-size: 1.2rem;
+            }
+            
+            .level-legend {
+                flex-wrap: wrap;
+                gap: 15px;
+                padding: 15px 25px;
+            }
+            
+            .filter-buttons {
+                gap: 12px;
+            }
+            
+            .filter-btn {
+                padding: 12px 24px;
+                font-size: 0.95rem;
+            }
+            
+            .curriculum-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            .track-card {
+                padding: 28px 24px;
+            }
+            
+            #back-to-top {
+                width: 50px;
+                height: 50px;
+                bottom: 30px;
+                right: 30px;
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .level-legend {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .track-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .track-icon {
+                margin-right: 0;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- 로딩 오버레이 -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- 배경 파티클 -->
+    <div class="bg-particles" id="bgParticles">
+        <!-- JavaScript로 동적 생성 -->
+    </div>
+
     <div class="container">
         <header class="header">
-            <h1 id="main-title">D.LAB 수성캠퍼스<br>코딩 로드맵</h1>
-            <p>개인의 목표와 수준에 맞춰 설계된 최적의 학습 경로. <br>초등부터 성인까지, 당신의 잠재력을 코드로 실현하세요.</p>
-            <a href="#" class="cta-btn"><i class="fas fa-comments"></i> 1:1 맞춤 상담 신청</a>
+            <h1>D.LAB 수성캠퍼스<br>코딩 로드맵</h1>
+            <p>개인의 목표와 수준에 맞춰 설계된 최적의 학습 경로.<br>초등부터 성인까지, 당신의 잠재력을 코드로 실현하세요.</p>
+            <div class="cta-container">
+                <a href="#" class="cta-btn"><i class="fas fa-comments"></i> 1:1 맞춤 상담 신청</a>
+                <a href="roadmap.html" class="cta-btn secondary"><i class="fas fa-route"></i> 성장 로드맵 보기</a>
+            </div>
         </header>
 
-        <div class="level-legend">
-            <div class="legend-item" data-level="elementary"><span class="legend-dot elementary"></span>초등 과정</div>
-            <div class="legend-item" data-level="middle"><span class="legend-dot middle"></span>중등 과정</div>
-            <div class="legend-item" data-level="high"><span class="legend-dot high"></span>고등 과정</div>
-            <div class="legend-item" data-level="general"><span class="legend-dot general"></span>커리어 과정</div>
-        </div>
+                 <div class="level-legend">
+             <div class="legend-item clickable" data-level="elementary" onclick="goToRoadmap()">
+                 <span class="legend-dot elementary"></span>
+                 초등 과정
+             </div>
+             <div class="legend-item clickable" data-level="middle" onclick="goToRoadmap()">
+                 <span class="legend-dot middle"></span>
+                 중등 과정
+             </div>
+             <div class="legend-item clickable" data-level="high" onclick="goToRoadmap()">
+                 <span class="legend-dot high"></span>
+                 고등 과정
+             </div>
+             <div class="legend-item clickable" data-level="general" onclick="goToRoadmap()">
+                 <span class="legend-dot general"></span>
+                 커리어 과정
+             </div>
+         </div>
 
         <div class="filter-buttons">
-            <button class="filter-btn active" onclick="filterCourses('all')"><i class="fas fa-border-all"></i> 전체</button>
-            <button class="filter-btn" onclick="filterCourses('elementary')"><i class="fas fa-child"></i> 초등</button>
-            <button class="filter-btn" onclick="filterCourses('middle')"><i class="fas fa-rocket"></i> 중등</button>
-            <button class="filter-btn" onclick="filterCourses('high')"><i class="fas fa-atom"></i> 고등</button>
-            <button class="filter-btn" onclick="filterCourses('general')"><i class="fas fa-briefcase"></i> 커리어</button>
+            <button class="filter-btn active" onclick="filterCourses('all')">
+                <i class="fas fa-border-all"></i> 전체
+            </button>
+            <button class="filter-btn" onclick="filterCourses('elementary')">
+                <i class="fas fa-child"></i> 초등
+            </button>
+            <button class="filter-btn" onclick="filterCourses('middle')">
+                <i class="fas fa-rocket"></i> 중등
+            </button>
+            <button class="filter-btn" onclick="filterCourses('high')">
+                <i class="fas fa-atom"></i> 고등
+            </button>
+            <button class="filter-btn" onclick="filterCourses('general')">
+                <i class="fas fa-briefcase"></i> 커리어
+            </button>
         </div>
 
         <div class="curriculum-grid">
-            <!-- 그리드 내용은 이전과 동일하게 유지됩니다 -->
             <!-- 초등 과정 -->
-            <div class="track-card" data-level="elementary"><div class="track-header"><div class="track-icon"><i class="fas fa-cubes"></i></div><div><div class="track-title">Rookies Track</div><div class="track-age">7세 ~ 초등 저학년</div></div></div><ul class="course-list"><li class="course-item"><span class="course-name">레고 WeDo / 스크래치 주니어</span><span class="duration">12개월+</span></li></ul></div>
-            <div class="track-card" data-level="elementary"><div class="track-header"><div class="track-icon"><i class="fas fa-star"></i></div><div><div class="track-title">Starter Track</div><div class="track-age">초등 중/고학년</div></div></div><ul class="course-list"><li class="course-item"><span class="course-name">스크래치 X AI</span><span class="duration">6개월</span></li><li class="course-item"><span class="course-name">마인크래프트 코딩</span><span class="duration">6개월</span></li></ul></div>
+            <div class="track-card" data-level="elementary">
+                <div class="track-header">
+                    <div class="track-icon"><i class="fas fa-cubes"></i></div>
+                    <div>
+                        <div class="track-title">Rookies Track</div>
+                        <div class="track-age">7세 ~ 초등 저학년</div>
+                    </div>
+                </div>
+                <ul class="course-list">
+                    <li class="course-item">
+                        <span class="course-name">레고 WeDo / 스크래치 주니어</span>
+                        <span class="duration">12개월+</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="track-card" data-level="elementary">
+                <div class="track-header">
+                    <div class="track-icon"><i class="fas fa-star"></i></div>
+                    <div>
+                        <div class="track-title">Starter Track</div>
+                        <div class="track-age">초등 중/고학년</div>
+                    </div>
+                </div>
+                <ul class="course-list">
+                    <li class="course-item">
+                        <span class="course-name">스크래치 X AI</span>
+                        <span class="duration">6개월</span>
+                    </li>
+                    <li class="course-item">
+                        <span class="course-name">마인크래프트 코딩</span>
+                        <span class="duration">6개월</span>
+                    </li>
+                </ul>
+            </div>
             
             <!-- 중등 기초/심화 과정 -->
-            <div class="track-card" data-level="elementary middle"><div class="track-header"><div class="track-icon"><i class="fas fa-palette"></i></div><div><div class="track-title">Creator Track</div><div class="track-age">초등 고학년 ~ 중등</div></div></div><ul class="course-list"><li class="course-item"><span class="course-name">앱 인벤터 / 로블록스</span><span class="duration">각 6개월</span></li></ul></div>
-            <div class="track-card" data-level="elementary middle high"><div class="track-header"><div class="track-icon"><i class="fa-brands fa-python"></i></div><div><div class="track-title">파이썬 기초</div><div class="track-age">초5+, 코딩 입문자</div></div></div><ul class="course-list"><li class="course-item"><span class="course-name">기초 문법 & 자료구조</span><span class="duration">3개월</span></li><li class="course-item"><span class="course-name">함수와 모듈</span><span class="duration">2개월</span></li></ul></div>
-            <div class="track-card" data-level="middle high"><div class="track-header"><div class="track-icon"><i class="fas fa-terminal"></i></div><div><div class="track-title">C/C++ & 알고리즘</div><div class="track-age">중학생 이상, 개발자 지망생</div></div></div><ul class="course-list"><li class="course-item"><span class="course-name">C언어/C++ 기초</span><span class="duration">6개월</span></li><li class="course-item"><span class="course-name">자료구조 & 알고리즘</span><span class="duration">6개월</span></li></ul></div>
-            <div class="track-card" data-level="elementary middle"><div class="track-header"><div class="track-icon"><i class="fas fa-trophy"></i></div><div><div class="track-title">정보올림피아드 준비</div><div class="track-age">초/중학생 영재</div></div></div><ul class="course-list"><li class="course-item"><span class="course-name">KOI 대비 알고리즘 심화</span><span class="duration">상시</span></li></ul></div>
+            <div class="track-card" data-level="elementary middle">
+                <div class="track-header">
+                    <div class="track-icon"><i class="fas fa-palette"></i></div>
+                    <div>
+                        <div class="track-title">Creator Track</div>
+                        <div class="track-age">초등 고학년 ~ 중등</div>
+                    </div>
+                </div>
+                <ul class="course-list">
+                    <li class="course-item">
+                        <span class="course-name">앱 인벤터 / 로블록스</span>
+                        <span class="duration">각 6개월</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="track-card" data-level="elementary middle high">
+                <div class="track-header">
+                    <div class="track-icon"><i class="fa-brands fa-python"></i></div>
+                    <div>
+                        <div class="track-title">파이썬 기초</div>
+                        <div class="track-age">초5+, 코딩 입문자</div>
+                    </div>
+                </div>
+                <ul class="course-list">
+                    <li class="course-item">
+                        <span class="course-name">기초 문법 & 자료구조</span>
+                        <span class="duration">3개월</span>
+                    </li>
+                    <li class="course-item">
+                        <span class="course-name">함수와 모듈</span>
+                        <span class="duration">2개월</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="track-card" data-level="middle high">
+                <div class="track-header">
+                    <div class="track-icon"><i class="fas fa-terminal"></i></div>
+                    <div>
+                        <div class="track-title">C/C++ & 알고리즘</div>
+                        <div class="track-age">중학생 이상, 개발자 지망생</div>
+                    </div>
+                </div>
+                <ul class="course-list">
+                    <li class="course-item">
+                        <span class="course-name">C언어/C++ 기초</span>
+                        <span class="duration">6개월</span>
+                    </li>
+                    <li class="course-item">
+                        <span class="course-name">자료구조 & 알고리즘</span>
+                        <span class="duration">6개월</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="track-card" data-level="elementary middle">
+                <div class="track-header">
+                    <div class="track-icon"><i class="fas fa-trophy"></i></div>
+                    <div>
+                        <div class="track-title">정보올림피아드 준비</div>
+                        <div class="track-age">초/중학생 영재</div>
+                    </div>
+                </div>
+                <ul class="course-list">
+                    <li class="course-item">
+                        <span class="course-name">KOI 대비 알고리즘 심화</span>
+                        <span class="duration">상시</span>
+                    </li>
+                </ul>
+            </div>
 
             <!-- 고등 심화 과정 (대입 연계) -->
-            <div class="track-card" data-level="middle high"><div class="track-header"><div class="track-icon"><i class="fas fa-flask-vial"></i></div><div><div class="track-title">교과융합 프로젝트</div><div class="track-age">중/고등학생 (생기부)</div></div></div><ul class="course-list"><li class="course-item"><span class="course-name">파이썬 물리 시뮬레이션</span><span class="new-badge">NEW</span><span class="duration">3개월</span></li><li class="course-item"><span class="course-name">데이터로 보는 사회/역사</span><span class="new-badge">NEW</span><span class="duration">3개월</span></li><li class="course-item"><span class="course-name">코드로 푸는 수학/과학</span><span class="new-badge">NEW</span><span class="duration">3개월</span></li></ul></div>
-            <div class="track-card" data-level="high"><div class="track-header"><div class="track-icon"><i class="fas fa-file-signature"></i></div><div><div class="track-title">고교 수행평가 대비</div><div class="track-age">고등학생 (내신/세특)</div></div></div><ul class="course-list"><li class="course-item"><span class="course-name">탐구보고서 주제 선정</span><span class="new-badge">NEW</span><span class="duration">1개월</span></li><li class="course-item"><span class="course-name">산출물 프로그래밍 구현</span><span class="new-badge">NEW</span><span class="duration">3개월</span></li><li class="course-item"><span class="course-name">발표 및 포트폴리오 관리</span><span class="new-badge">NEW</span><span class="duration">1개월</span></li></ul></div>
-            <div class="track-card" data-level="high"><div class="track-header"><div class="track-icon"><i class="fas fa-layer-group"></i></div><div><div class="track-title">웹 풀스택 개발</div><div class="track-age">고등학생 (포트폴리오)</div></div></div><ul class="course-list"><li class="course-item"><span class="course-name">React & Node.js</span><span class="new-badge">NEW</span><span class="duration">6개월</span></li><li class="course-item"><span class="course-name">클라우드 배포 (AWS/GCP)</span><span class="new-badge">NEW</span><span class="duration">2개월</span></li><li class="course-item"><span class="course-name">팀 프로젝트 & 런칭</span><span class="new-badge">NEW</span><span class="duration">3개월</span></li></ul></div>
-            <div class="track-card" data-level="high"><div class="track-header"><div class="track-icon"><i class="fas fa-brain"></i></div><div><div class="track-title">AI & 머신러닝</div><div class="track-age">고등학생 (심화탐구)</div></div></div><ul class="course-list"><li class="course-item"><span class="course-name">머신러닝 & 딥러닝 이론</span><span class="new-badge">NEW</span><span class="duration">6개월</span></li><li class="course-item"><span class="course-name">AI 모델 구현 (PyTorch)</span><span class="new-badge">NEW</span><span class="duration">6개월</span></li></ul></div>
-            <div class="track-card" data-level="middle high"><div class="track-header"><div class="track-icon"><i class="fa-brands fa-unity"></i></div><div><div class="track-title">Unity 게임 개발</div><div class="track-age">중학생 이상, 게임 제작 희망자</div></div></div><ul class="course-list"><li class="course-item"><span class="course-name">Unity 엔진 및 C# 기초</span><span class="new-badge">NEW</span><span class="duration">4개월</span></li><li class="course-item"><span class="course-name">2D/3D 게임 프로젝트</span><span class="new-badge">NEW</span><span class="duration">6개월</span></li></ul></div>
+            <div class="track-card" data-level="middle high">
+                <div class="track-header">
+                    <div class="track-icon"><i class="fas fa-flask-vial"></i></div>
+                    <div>
+                        <div class="track-title">교과융합 프로젝트</div>
+                        <div class="track-age">중/고등학생 (생기부)</div>
+                    </div>
+                </div>
+                <ul class="course-list">
+                    <li class="course-item">
+                        <span class="course-name">파이썬 물리 시뮬레이션</span>
+                        <span class="new-badge">NEW</span>
+                        <span class="duration">3개월</span>
+                    </li>
+                    <li class="course-item">
+                        <span class="course-name">데이터로 보는 사회/역사</span>
+                        <span class="new-badge">NEW</span>
+                        <span class="duration">3개월</span>
+                    </li>
+                    <li class="course-item">
+                        <span class="course-name">코드로 푸는 수학/과학</span>
+                        <span class="new-badge">NEW</span>
+                        <span class="duration">3개월</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="track-card" data-level="high">
+                <div class="track-header">
+                    <div class="track-icon"><i class="fas fa-file-signature"></i></div>
+                    <div>
+                        <div class="track-title">고교 수행평가 대비</div>
+                        <div class="track-age">고등학생 (내신/세특)</div>
+                    </div>
+                </div>
+                <ul class="course-list">
+                    <li class="course-item">
+                        <span class="course-name">탐구보고서 주제 선정</span>
+                        <span class="new-badge">NEW</span>
+                        <span class="duration">1개월</span>
+                    </li>
+                    <li class="course-item">
+                        <span class="course-name">산출물 프로그래밍 구현</span>
+                        <span class="new-badge">NEW</span>
+                        <span class="duration">3개월</span>
+                    </li>
+                    <li class="course-item">
+                        <span class="course-name">발표 및 포트폴리오 관리</span>
+                        <span class="new-badge">NEW</span>
+                        <span class="duration">1개월</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="track-card" data-level="high">
+                <div class="track-header">
+                    <div class="track-icon"><i class="fas fa-layer-group"></i></div>
+                    <div>
+                        <div class="track-title">웹 풀스택 개발</div>
+                        <div class="track-age">고등학생 (포트폴리오)</div>
+                    </div>
+                </div>
+                <ul class="course-list">
+                    <li class="course-item">
+                        <span class="course-name">React & Node.js</span>
+                        <span class="new-badge">NEW</span>
+                        <span class="duration">6개월</span>
+                    </li>
+                    <li class="course-item">
+                        <span class="course-name">클라우드 배포 (AWS/GCP)</span>
+                        <span class="new-badge">NEW</span>
+                        <span class="duration">2개월</span>
+                    </li>
+                    <li class="course-item">
+                        <span class="course-name">팀 프로젝트 & 런칭</span>
+                        <span class="new-badge">NEW</span>
+                        <span class="duration">3개월</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="track-card" data-level="high">
+                <div class="track-header">
+                    <div class="track-icon"><i class="fas fa-brain"></i></div>
+                    <div>
+                        <div class="track-title">AI & 머신러닝</div>
+                        <div class="track-age">고등학생 (심화탐구)</div>
+                    </div>
+                </div>
+                <ul class="course-list">
+                    <li class="course-item">
+                        <span class="course-name">머신러닝 & 딥러닝 이론</span>
+                        <span class="new-badge">NEW</span>
+                        <span class="duration">6개월</span>
+                    </li>
+                    <li class="course-item">
+                        <span class="course-name">AI 모델 구현 (PyTorch)</span>
+                        <span class="new-badge">NEW</span>
+                        <span class="duration">6개월</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="track-card" data-level="middle high">
+                <div class="track-header">
+                    <div class="track-icon"><i class="fa-brands fa-unity"></i></div>
+                    <div>
+                        <div class="track-title">Unity 게임 개발</div>
+                        <div class="track-age">중학생 이상, 게임 제작 희망자</div>
+                    </div>
+                </div>
+                <ul class="course-list">
+                    <li class="course-item">
+                        <span class="course-name">Unity 엔진 및 C# 기초</span>
+                        <span class="new-badge">NEW</span>
+                        <span class="duration">4개월</span>
+                    </li>
+                    <li class="course-item">
+                        <span class="course-name">2D/3D 게임 프로젝트</span>
+                        <span class="new-badge">NEW</span>
+                        <span class="duration">6개월</span>
+                    </li>
+                </ul>
+            </div>
 
             <!-- 커리어 전환 과정 -->
-            <div class="track-card" data-level="general"><div class="track-header"><div class="track-icon"><i class="fas fa-user-tie"></i></div><div><div class="track-title">커리어 전환 부트캠프</div><div class="track-age">대학생, 취업/이직 준비생</div></div></div><ul class="course-list"><li class="course-item"><span class="course-name">프론트엔드 집중 과정</span><span class="new-badge">NEW</span><span class="duration">6개월</span></li><li class="course-item"><span class="course-name">백엔드(Java/Spring) 과정</span><span class="new-badge">NEW</span><span class="duration">6개월</span></li><li class="course-item"><span class="course-name">AI 데이터 분석 과정</span><span class="new-badge">NEW</span><span class="duration">6개월</span></li></ul></div>
+            <div class="track-card" data-level="general">
+                <div class="track-header">
+                    <div class="track-icon"><i class="fas fa-user-tie"></i></div>
+                    <div>
+                        <div class="track-title">커리어 전환 부트캠프</div>
+                        <div class="track-age">대학생, 취업/이직 준비생</div>
+                    </div>
+                </div>
+                <ul class="course-list">
+                    <li class="course-item">
+                        <span class="course-name">프론트엔드 집중 과정</span>
+                        <span class="new-badge">NEW</span>
+                        <span class="duration">6개월</span>
+                    </li>
+                    <li class="course-item">
+                        <span class="course-name">백엔드(Java/Spring) 과정</span>
+                        <span class="new-badge">NEW</span>
+                        <span class="duration">6개월</span>
+                    </li>
+                    <li class="course-item">
+                        <span class="course-name">AI 데이터 분석 과정</span>
+                        <span class="new-badge">NEW</span>
+                        <span class="duration">6개월</span>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     
-    <button id="back-to-top" aria-label="맨 위로 가기"><i class="fas fa-arrow-up"></i></button>
+    <button id="back-to-top" aria-label="맨 위로 가기">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const legendItems = document.querySelectorAll('.legend-item');
-            const allCards = document.querySelectorAll('.track-card');
-            legendItems.forEach(item => {
-                item.addEventListener('mouseenter', () => {
-                    const level = item.dataset.level;
-                    allCards.forEach(card => {
-                        card.style.transition = 'opacity 0.3s, transform 0.3s';
-                        if (card.dataset.level.includes(level)) {
-                            card.style.opacity = '1';
-                            card.style.transform = 'scale(1.03)';
-                        } else {
-                            card.style.opacity = '0.2';
-                            card.style.transform = 'scale(0.95)';
-                        }
-                    });
-                });
-                item.addEventListener('mouseleave', () => {
-                    const activeFilter = document.querySelector('.filter-btn.active').getAttribute('onclick').match(/'([^']+)'/)[1];
-                    filterCourses(activeFilter, false);
-                });
-            });
+        // 배경 파티클 생성
+        function createParticles() {
+            const container = document.getElementById('bgParticles');
+            const particleCount = 60;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (8 + Math.random() * 6) + 's';
+                container.appendChild(particle);
+            }
+        }
 
-            const backToTopButton = document.getElementById('back-to-top');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 300) {
-                    backToTopButton.classList.add('visible');
-                } else {
-                    backToTopButton.classList.remove('visible');
-                }
-            });
-            backToTopButton.addEventListener('click', () => { window.scrollTo({ top: 0 }); });
-        });
+        // 페이지 로딩 완료 처리
+        function hideLoadingOverlay() {
+            const overlay = document.getElementById('loadingOverlay');
+            setTimeout(() => {
+                overlay.style.opacity = '0';
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                }, 500);
+            }, 1000);
+        }
 
+        // 필터 기능
         function filterCourses(type, isButtonClick = true) {
             if (isButtonClick && event) {
                 const buttons = document.querySelectorAll('.filter-btn');
@@ -243,18 +1070,127 @@
             cards.forEach(card => {
                 const cardLevels = card.dataset.level;
                 const matches = (type === 'all' || (cardLevels && cardLevels.includes(type)));
-                card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                
+                card.style.transition = 'all 0.4s ease';
                 if (matches) {
                     card.style.opacity = '1';
                     card.style.transform = 'scale(1)';
                     card.style.pointerEvents = 'auto';
                 } else {
-                    card.style.opacity = '0.15';
+                    card.style.opacity = '0.2';
                     card.style.transform = 'scale(0.95)';
                     card.style.pointerEvents = 'none';
                 }
             });
         }
+
+        // 범례 hover 효과
+        function setupLegendHover() {
+            const legendItems = document.querySelectorAll('.legend-item');
+            const allCards = document.querySelectorAll('.track-card');
+            
+            legendItems.forEach(item => {
+                item.addEventListener('mouseenter', () => {
+                    const level = item.dataset.level;
+                    allCards.forEach(card => {
+                        card.style.transition = 'opacity 0.3s, transform 0.3s';
+                        if (card.dataset.level.includes(level)) {
+                            card.style.opacity = '1';
+                            card.style.transform = 'scale(1.02)';
+                        } else {
+                            card.style.opacity = '0.2';
+                            card.style.transform = 'scale(0.95)';
+                        }
+                    });
+                });
+                
+                item.addEventListener('mouseleave', () => {
+                    const activeFilter = document.querySelector('.filter-btn.active')
+                        .getAttribute('onclick').match(/'([^']+)'/)[1];
+                    filterCourses(activeFilter, false);
+                });
+            });
+        }
+
+        // 백 투 탑 버튼
+        function setupBackToTop() {
+            const backToTopButton = document.getElementById('back-to-top');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 400) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', () => {
+                window.scrollTo({ 
+                    top: 0, 
+                    behavior: 'smooth' 
+                });
+            });
+        }
+
+        // 카드 애니메이션 (Intersection Observer)
+        function setupCardAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }, index * 100);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            document.querySelectorAll('.track-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        }
+
+                 // 로드맵 페이지로 이동
+         function goToRoadmap() {
+             // 부드러운 페이지 전환 효과
+             document.body.style.opacity = '0.8';
+             document.body.style.transform = 'scale(0.98)';
+             
+             setTimeout(() => {
+                 window.location.href = 'roadmap.html';
+             }, 200);
+         }
+
+         // 초기화
+         document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            hideLoadingOverlay();
+            setupLegendHover();
+            setupBackToTop();
+            setupCardAnimations();
+            
+            // 키보드 접근성
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    // ESC 키 기능 (필요시 추가)
+                }
+            });
+        });
+
+        // 페이지 가시성 변경 시 애니메이션 일시정지/재생
+        document.addEventListener('visibilitychange', () => {
+            const particles = document.querySelectorAll('.particle');
+            particles.forEach(particle => {
+                particle.style.animationPlayState = 
+                    document.hidden ? 'paused' : 'running';
+            });
+        });
     </script>
 </body>
 </html>
