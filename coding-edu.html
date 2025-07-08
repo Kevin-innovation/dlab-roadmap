@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2025 대한민국 중고등학교 코딩교육 로드맵</title>
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+      --secondary-gradient: linear-gradient(135deg, #4facfe, #00f2fe);
+      --success-gradient: linear-gradient(135deg, #11998e, #38ef7d);
+      --warning-gradient: linear-gradient(135deg, #fc4a1a, #f7b733);
+      --bg-dark: #0a0a1a;
+      --bg-mid: #1a1a2e;
+      --bg-light: #16213e;
+      --text-light: #e2e8f0;
+      --text-accent: #94a3b8;
+      --text-muted: #64748b;
+      --color-elementary: #4ade80;
+      --color-middle: #3b82f6;
+      --color-high: #a855f7;
+      --color-general: #f59e0b;
+      --shadow-glow: 0 0 40px rgba(102, 126, 234, 0.3);
+      --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.3);
+      --border-radius: 20px;
+      --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Pretendard', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-light);
+      overflow-x: hidden;
+      line-height: 1.7;
+      position: relative;
+    }
+    .bg-particles {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;
+    }
+    .particle {
+      position: absolute; width: 3px; height: 3px; background: rgba(102, 126, 234, 0.4); border-radius: 50%; animation: float 8s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.2; }
+      50% { transform: translateY(-30px) rotate(180deg); opacity: 0.8; }
+    }
+    .container {
+      position: relative; z-index: 1; max-width: 1000px; margin: 0 auto; padding: 60px 20px;
+    }
+    .header {
+      text-align: center; margin-bottom: 60px; position: relative;
+    }
+    .header h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 900;
+      background: var(--primary-gradient);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradient-shift 8s ease infinite;
+      margin-bottom: 20px;
+      letter-spacing: -2px;
+      line-height: 1.1;
+    }
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .header p {
+      font-size: 1.2rem;
+      color: var(--text-accent);
+      max-width: 700px;
+      margin: 0 auto 30px;
+      opacity: 0.9;
+    }
+    .section {
+      background: rgba(255,255,255,0.03);
+      border-radius: 20px;
+      box-shadow: var(--shadow-glow);
+      margin-bottom: 40px;
+      padding: 36px 28px;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .section h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+      background: var(--secondary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .roadmap-visual {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 30px;
+      gap: 10px;
+    }
+    .roadmap-step {
+      flex: 1;
+      background: rgba(255,255,255,0.07);
+      border-radius: 16px;
+      padding: 24px 10px 16px;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(102,126,234,0.08);
+      position: relative;
+      min-width: 120px;
+    }
+    .roadmap-step:not(:last-child)::after {
+      content: '\f061';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute;
+      right: -18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--color-high);
+      font-size: 1.3rem;
+      opacity: 0.7;
+    }
+    .roadmap-step .icon {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+      display: block;
+      color: var(--color-high);
+    }
+    .roadmap-step .label {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--text-light);
+    }
+    @media (max-width: 700px) {
+      .roadmap-visual { flex-direction: column; gap: 20px; align-items: stretch; }
+      .roadmap-step:not(:last-child)::after { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-particles"></div>
+  <div class="container">
+    <div style="text-align:left; margin-bottom:18px;">
+      <a href="index.html" class="cta-btn" style="padding:10px 28px; font-size:1rem; border-radius:30px; background:var(--secondary-gradient); color:white; display:inline-block;"><i class="fas fa-arrow-left"></i> 메인으로 돌아가기</a>
+    </div>
+    <div class="header">
+      <h1>2025 대한민국<br>중,고등학교 코딩교육 로드맵</h1>
+      <p>학부모님을 위한, 미래를 준비하는 자녀의 코딩교육 안내</p>
+    </div>
+    <div class="section">
+      <h2>1. 학업과 코딩의 연관성 & 로드맵 계획</h2>
+      <p>
+        2025년부터 고교학점제가 전면 도입되면서, 학생들은 자신의 진로와 적성에 맞는 과목을 선택해 이수하게 됩니다.<br>
+        이 과정에서 <b>코딩(프로그래밍)</b>은 단순한 기술 습득을 넘어, <b>문제해결력·논리적 사고·창의성</b>을 키우는 핵심 역량으로 자리잡고 있습니다.<br>
+        <br>
+        <b>코딩교육 로드맵</b>을 통해 학생들은 초·중등 단계별로 기초부터 심화까지 체계적으로 성장할 수 있습니다.
+      </p>
+    </div>
+    <div class="section">
+      <h2>2. 고교학점제에서 코딩교육이 필요한 이유</h2>
+      <ul style="margin-left:18px;">
+        <li><b>진로 맞춤형 역량 강화</b> : IT, 인공지능, 데이터 등 미래 유망 분야 진출을 위한 필수 역량</li>
+        <li><b>융합적 사고력</b> : 수학·과학·예술 등 다양한 교과와 연계, 융합적 문제해결력 강화</li>
+        <li><b>대입 및 취업 경쟁력</b> : SW특기자 전형, AI·SW 관련 학과 진학, 실무 역량 어필</li>
+        <li><b>미래 사회 대비</b> : 디지털 전환 시대, 모든 직업군에서 요구되는 기본 소양</li>
+      </ul>
+    </div>
+    <div class="section">
+      <h2>3. 코딩교육 로드맵</h2>
+      <div class="roadmap-visual">
+        <div class="roadmap-step">
+          <span class="icon"><i class="fa-solid fa-cube"></i></span>
+          <span class="label">초등<br>코딩 기초</span>
+        </div>
+        <div class="roadmap-step">
+          <span class="icon"><i class="fa-solid fa-gears"></i></span>
+          <span class="label">중등<br>문제해결·AI</span>
+        </div>
+        <div class="roadmap-step">
+          <span class="icon"><i class="fa-solid fa-laptop-code"></i></span>
+          <span class="label">고등<br>심화·진로연계</span>
+        </div>
+        <div class="roadmap-step">
+          <span class="icon"><i class="fa-solid fa-rocket"></i></span>
+          <span class="label">진학/취업<br>실전 역량</span>
+        </div>
+      </div>
+      <p style="margin-top:28px; color:var(--text-accent); text-align:center;">
+        단계별로 기초-심화-진로까지, 학생의 성장에 맞춘 맞춤형 코딩교육이 제공됩니다.
+      </p>
+    </div>
+    <div class="section">
+      <h2>4. 교과별 파이썬/AI 연계성 & 프로그램 매칭</h2>
+      <div style="display:flex; flex-wrap:wrap; gap:28px 36px; justify-content:center; margin-bottom:24px;">
+        <div style="flex:1 1 380px; min-width:340px; max-width:420px; background:rgba(76,122,255,0.08); border-radius:16px; padding:22px 24px; box-shadow:0 2px 8px rgba(76,122,255,0.07);">
+          <h3 style="font-size:1.1rem; color:#4ade80; margin-bottom:8px;">수학</h3>
+          <ul style="font-size:1.05rem; color:var(--text-accent); line-height:1.8;">
+            <li><b>확률과 통계</b> - 파이썬 데이터분석, 시뮬레이션</li>
+            <li><b>함수/미적분</b> - 파이썬 그래프, 수치해석</li>
+            <li><b>수열/귀납법</b> - 반복/재귀 프로그래밍</li>
+          </ul>
+        </div>
+        <div style="flex:1 1 380px; min-width:340px; max-width:420px; background:rgba(76,122,255,0.08); border-radius:16px; padding:22px 24px; box-shadow:0 2px 8px rgba(76,122,255,0.07);">
+          <h3 style="font-size:1.1rem; color:#3b82f6; margin-bottom:8px;">과학</h3>
+          <ul style="font-size:1.05rem; color:var(--text-accent); line-height:1.8;">
+            <li><b>물리</b> - 운동/실험 시뮬레이션</li>
+            <li><b>화학</b> - 분자구조, 반응속도 시각화</li>
+            <li><b>생명/지구과학</b> - 데이터 분석, 시뮬레이션</li>
+          </ul>
+        </div>
+        <div style="flex:1 1 380px; min-width:340px; max-width:420px; background:rgba(168,85,247,0.08); border-radius:16px; padding:22px 24px; box-shadow:0 2px 8px rgba(168,85,247,0.07);">
+          <h3 style="font-size:1.1rem; color:#a855f7; margin-bottom:8px;">정보/AI</h3>
+          <ul style="font-size:1.05rem; color:var(--text-accent); line-height:1.8;">
+            <li><b>정보</b> - 파이썬 기초, 알고리즘</li>
+            <li><b>AI 기초/실습</b> - 머신러닝, 딥러닝 실습</li>
+            <li><b>AI 수학</b> - 데이터/행렬/통계 실습</li>
+          </ul>
+        </div>
+        <div style="flex:1 1 380px; min-width:340px; max-width:420px; background:rgba(245,158,11,0.08); border-radius:16px; padding:22px 24px; box-shadow:0 2px 8px rgba(245,158,11,0.07);">
+          <h3 style="font-size:1.1rem; color:#f59e0b; margin-bottom:8px;">융합/탐구</h3>
+          <ul style="font-size:1.05rem; color:var(--text-accent); line-height:1.8;">
+            <li>데이터 기반 프로젝트</li>
+            <li>실생활 문제해결(코딩+수학+과학)</li>
+          </ul>
+        </div>
+      </div>
+      <div style="margin:0 auto; max-width:900px;">
+        <svg width="100%" height="260" viewBox="0 0 900 260">
+          <defs>
+            <linearGradient id="gmath" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#4ade80"/>
+              <stop offset="100%" stop-color="#3b82f6"/>
+            </linearGradient>
+            <linearGradient id="gsci" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#3b82f6"/>
+              <stop offset="100%" stop-color="#a855f7"/>
+            </linearGradient>
+            <linearGradient id="gai" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#a855f7"/>
+              <stop offset="100%" stop-color="#f59e0b"/>
+            </linearGradient>
+          </defs>
+          <!-- 교과별 노드 -->
+          <g font-family="Pretendard, sans-serif" font-size="16" font-weight="700">
+            <rect x="60" y="30" width="180" height="44" rx="18" fill="#4ade80" fill-opacity="0.13" stroke="#4ade80" stroke-width="2"/>
+            <text x="150" y="60" text-anchor="middle" fill="#4ade80">수학</text>
+            <rect x="260" y="30" width="180" height="44" rx="18" fill="#3b82f6" fill-opacity="0.13" stroke="#3b82f6" stroke-width="2"/>
+            <text x="350" y="60" text-anchor="middle" fill="#3b82f6">과학</text>
+            <rect x="460" y="30" width="180" height="44" rx="18" fill="#a855f7" fill-opacity="0.13" stroke="#a855f7" stroke-width="2"/>
+            <text x="550" y="60" text-anchor="middle" fill="#a855f7">정보/AI</text>
+            <rect x="660" y="30" width="180" height="44" rx="18" fill="#f59e0b" fill-opacity="0.13" stroke="#f59e0b" stroke-width="2"/>
+            <text x="750" y="60" text-anchor="middle" fill="#f59e0b">융합</text>
+          </g>
+          <!-- 단원 → 실습 → 활용 흐름 -->
+          <g font-family="Pretendard, sans-serif" font-size="14" font-weight="500">
+            <!-- 수학 흐름 -->
+            <rect x="90" y="90" width="120" height="36" rx="12" fill="#4ade80" fill-opacity="0.18"/>
+            <text x="150" y="112" text-anchor="middle" fill="#4ade80">확률·통계</text>
+            <rect x="90" y="136" width="120" height="36" rx="12" fill="#667eea" fill-opacity="0.18"/>
+            <text x="150" y="158" text-anchor="middle" fill="#667eea">데이터분석</text>
+            <rect x="90" y="182" width="120" height="36" rx="12" fill="#38ef7d" fill-opacity="0.18"/>
+            <text x="150" y="204" text-anchor="middle" fill="#38ef7d">실험 시뮬레이션</text>
+            <polyline points="150,74 150,90" stroke="#4ade80" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+            <polyline points="150,126 150,136" stroke="#4ade80" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+            <polyline points="150,172 150,182" stroke="#4ade80" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+            <!-- 과학 흐름 -->
+            <rect x="290" y="90" width="120" height="36" rx="12" fill="#3b82f6" fill-opacity="0.18"/>
+            <text x="350" y="112" text-anchor="middle" fill="#3b82f6">물리/화학</text>
+            <rect x="290" y="136" width="120" height="36" rx="12" fill="#60a5fa" fill-opacity="0.18"/>
+            <text x="350" y="158" text-anchor="middle" fill="#60a5fa">시뮬레이션</text>
+            <rect x="290" y="182" width="120" height="36" rx="12" fill="#10b981" fill-opacity="0.18"/>
+            <text x="350" y="204" text-anchor="middle" fill="#10b981">데이터분석</text>
+            <polyline points="350,74 350,90" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+            <polyline points="350,126 350,136" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+            <polyline points="350,172 350,182" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+            <!-- 정보/AI 흐름 -->
+            <rect x="490" y="90" width="120" height="36" rx="12" fill="#a855f7" fill-opacity="0.18"/>
+            <text x="550" y="112" text-anchor="middle" fill="#a855f7">AI 기초</text>
+            <rect x="490" y="136" width="120" height="36" rx="12" fill="#c084fc" fill-opacity="0.18"/>
+            <text x="550" y="158" text-anchor="middle" fill="#c084fc">머신러닝</text>
+            <rect x="490" y="182" width="120" height="36" rx="12" fill="#f093fb" fill-opacity="0.18"/>
+            <text x="550" y="204" text-anchor="middle" fill="#f093fb">AI 프로젝트</text>
+            <polyline points="550,74 550,90" stroke="#a855f7" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+            <polyline points="550,126 550,136" stroke="#a855f7" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+            <polyline points="550,172 550,182" stroke="#a855f7" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+            <!-- 융합 흐름 -->
+            <rect x="690" y="90" width="120" height="36" rx="12" fill="#f59e0b" fill-opacity="0.18"/>
+            <text x="750" y="112" text-anchor="middle" fill="#f59e0b">융합탐구</text>
+            <rect x="690" y="136" width="120" height="36" rx="12" fill="#fbbf24" fill-opacity="0.18"/>
+            <text x="750" y="158" text-anchor="middle" fill="#fbbf24">데이터 프로젝트</text>
+            <rect x="690" y="182" width="120" height="36" rx="12" fill="#f7b733" fill-opacity="0.18"/>
+            <text x="750" y="204" text-anchor="middle" fill="#f7b733">실생활 적용</text>
+            <polyline points="750,74 750,90" stroke="#f59e0b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+            <polyline points="750,126 750,136" stroke="#f59e0b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+            <polyline points="750,172 750,182" stroke="#f59e0b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+          </g>
+          <!-- 화살표 마커 -->
+          <defs>
+            <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L8,4 L0,8 L2,4 Z" fill="#888" />
+            </marker>
+          </defs>
+        </svg>
+        <div style="text-align:center; color:var(--text-accent); font-size:1.05rem; margin-top:10px; font-weight:600;">
+          교과별 주요 단원 → 실습 주제 → 실제 활용 예시 흐름을 한눈에 볼 수 있습니다.
+        </div>
+      </div>
+      <div style="margin-top:32px;">
+        <h3 style="font-size:1.08rem; color:var(--text-light); margin-bottom:10px;">D.LAB 프로그램별 연계 예시</h3>
+        <div style="display:flex; flex-wrap:wrap; gap:14px; justify-content:center;">
+          <div style="flex:1 1 200px; min-width:200px; background:rgba(102,126,234,0.08); border-radius:14px; padding:14px 10px;">
+            <b>파이썬 기초</b><br>
+            <span style="color:var(--text-accent); font-size:0.97rem;">수학(수열, 함수), 정보(기초문법), 과학(데이터처리)</span>
+          </div>
+          <div style="flex:1 1 200px; min-width:200px; background:rgba(102,126,234,0.08); border-radius:14px; padding:14px 10px;">
+            <b>AI 프로젝트</b><br>
+            <span style="color:var(--text-accent); font-size:0.97rem;">정보/AI(머신러닝 실습), 수학(통계, 행렬), 과학(데이터분석)</span>
+          </div>
+          <div style="flex:1 1 200px; min-width:200px; background:rgba(102,126,234,0.08); border-radius:14px; padding:14px 10px;">
+            <b>데이터 분석</b><br>
+            <span style="color:var(--text-accent); font-size:0.97rem;">수학(확률과 통계), 과학(실험데이터), 융합탐구(프로젝트)</span>
+          </div>
+          <div style="flex:1 1 200px; min-width:200px; background:rgba(102,126,234,0.08); border-radius:14px; padding:14px 10px;">
+            <b>코딩 심화/알고리즘</b><br>
+            <span style="color:var(--text-accent); font-size:0.97rem;">정보(알고리즘), 수학(문제해결), AI(딥러닝 기초)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // 파티클 효과 (index.html과 유사하게)
+    const bg = document.querySelector('.bg-particles');
+    for(let i=0; i<40; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.top = Math.random()*100+'%';
+      p.style.left = Math.random()*100+'%';
+      p.style.animationDelay = (Math.random()*8)+'s';
+      bg.appendChild(p);
+    }
+  </script>
+</body>
+</html> 
